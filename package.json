@@ -1,0 +1,22 @@
+{
+  "name": "task",
+  "version": "1.0.0",
+  "description": "Task Management Service",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atdurai/task.git"
+  },
+  "keywords": [
+    "task"
+  ],
+  "author": "atdurai <thangaduraigct@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atdurai/task/issues"
+  },
+  "homepage": "https://github.com/atdurai/task#readme"
+}
