@@ -1,11 +1,14 @@
-export interface Task {
+export interface Task extends TaskRequest {
   id: string
-  title: string
-  description: string
+  status: 'new' | 'in-progress' | 'pending' | 'blocked' | 'completed'
   createdAt: Date
   updatedAt?: Date
+}
+
+export interface TaskRequest {
+  title: string
+  description: string
   dueDate: Date
   assignedTo: string
   category: string
-  status: 'new' | 'in-progress' | 'pending' | 'blocked' | 'completed'
 }
