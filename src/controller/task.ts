@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { Task } from '../type/task'
+import { Task, TaskRequest } from '../type/task'
 import { v4 as uuid } from 'uuid'
-export const create = (req: Request, res: Response) => {
+import { save, fetch, fetchById, putById, removeById } from '../service/task'
+export const create = async (req: Request, res: Response) => {
   const { title, description, dueDate, assignedTo, category } = req.body
   const data: Task = {
     id: uuid(),
@@ -12,14 +13,35 @@ export const create = (req: Request, res: Response) => {
     assignedTo,
     category,
     status: 'new',
+    isDeleted: false,
   }
+  await save(data)
   res.status(201).json({ message: 'task created successfully', data })
 }
 
-export const get = (req: Request, res: Response) => {}
+export const get = async (req: Request, res: Response) => {
+  const tasks: Task[] = await fetch(req)
+  res.status(200).json({ tasks })
+}
 
-export const getById = (req: Request, res: Response) => {}
+export const getById = async (req: Request, res: Response) => {
+  const taskId = req.params.id
+  const task = await fetchById(taskId)
+  if (!task) res.status(404).json({ error: 'Task not found' })
+  res.status(200).json({ task })
+}
 
-export const updateById = (req: Request, res: Response) => {}
+export const updateById = async (req: Request, res: Response) => {
+  const taskId = req.params.id
+  const task = await fetchById(taskId)
+  if (!task) res.status(404).json({ error: 'Task not found' })
+  const data: TaskRequest = req.body
+  await putById(taskId, data)
+  res.status(200).json({ message: 'Task successfully updated', data })
+}
 
-export const deleteById = (req: Request, res: Response) => {}
+export const deleteById = async (req: Request, res: Response) => {
+  const taskId = req.params.id
+  await removeById(taskId)
+  res.status(200).json({ message: 'Task successfully deleted' })
+}
