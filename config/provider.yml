@@ -1,0 +1,31 @@
+name: aws
+runtime: nodejs16.x
+architecture: arm64
+region: ap-south-1
+stage: ${self:custom.stage}
+apiGateway:
+  shouldStartNameWithService: true
+  apiKeys:
+    - ${self:service}-${self:custom.stage}-apiKey
+layers: arn:aws:lambda:${aws:region}:${aws:accountId}:layer:prd-slsDependencies:latest
+deploymentBucket:
+  name: ${ssm:/petz/sls}
+environment:
+  SERVICE_NAME: ${self:service}
+  TABLE: ${self:custom.table}
+  STAGE: ${self:provider.stage}
+  REGION: ${self:provider.region}
+iam:
+  role:
+    statements:
+      - Effect: 'Allow'
+        Action:
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:DeleteItem
+          - dynamodb:UpdateItem
+          - dynamodb:Query
+          - dynamodb:Scan
+        Resource:
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.table}
+          - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/${self:custom.table}/index/*

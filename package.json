@@ -1,34 +1,38 @@
 {
   "name": "task",
   "version": "1.0.0",
-  "description": "Task Management Service",
+  "description": "Task Management",
   "main": "index.js",
   "scripts": {
-    "test": "exit 0",
-    "start" : "ts-node src/index.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "deploy": "sls deploy --verbose",
+    "remove-tst": "sls remove --verbose --stage tst --aws-profile task",
+    "deploy-tst": "sls deploy --verbose --stage tst --aws-profile task",
+    "deploy-prd": "sls deploy --verbose --stage prd --aws-profile task"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atdurai/task.git"
   },
-  "keywords": [
-    "task"
-  ],
-  "author": "atdurai <thangaduraigct@gmail.com>",
+  "author": "atdurai",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/atdurai/task/issues"
   },
   "homepage": "https://github.com/atdurai/task#readme",
   "dependencies": {
-    "axios": "^1.5.1",
-    "express": "^4.18.2",
-    "uuid": "^9.0.1"
+    "@middy/core": "^4.6.5",
+    "@middy/http-json-body-parser": "^4.6.5",
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1402.0",
+    "typescript": "*"
   },
   "devDependencies": {
-    "@types/express": "^4.17.19",
-    "@types/uuid": "^9.0.5",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
+    "@types/aws-lambda": "^8.10.119",
+    "@types/node": "^20.3.1",
+    "esbuild": "^0.18.4",
+    "serverless-esbuild": "^1.45.1",
+    "serverless-latest-layer-version": "^2.1.2"
   }
 }

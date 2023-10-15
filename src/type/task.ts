@@ -1,9 +1,9 @@
-export interface Task extends TaskRequest {
-  id: string
-  status: 'new' | 'in-progress' | 'pending' | 'blocked' | 'completed'
-  createdAt: Date
+export interface Task extends Partial<TaskRequest> {
+  id?: string
+  status?: 'new' | 'in-progress' | 'pending' | 'blocked' | 'completed'
+  createdAt?: Date
   updatedAt?: Date
-  isDeleted: boolean
+  isDeleted?: boolean
 }
 
 export interface TaskRequest {

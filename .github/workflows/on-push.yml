@@ -1,0 +1,35 @@
+name: On Push hook
+
+on:
+  push:
+    branches:
+      - '*'
+      - '*/*'
+      - '**'
+      - '!prd'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  validate_branch_name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: deepakputhraya/action-branch-name@master
+        with:
+          regex: '^[A-Za-z]{2,}'
+          ignore: prd,tst
+          min_length: 3
+          max_length: 20
+
+  deploy_feature:
+    name: deploy_feature
+    needs: [validate_branch_name]
+    uses: ./.github/workflows/sls-base.yml
+    with:
+      stage: ${{ github.ref_name }}
+      aws-region: ap-south-1
+      service-name: ${{ github.event.repository.name }}
+      full-repo-name: ${{ github.repository }}
+    secrets: inherit

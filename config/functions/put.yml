@@ -1,0 +1,7 @@
+handler: src/handlers/task.put
+events:
+  - http:
+      path: /task/{id}
+      method: put
+      cors: true
+      private: true

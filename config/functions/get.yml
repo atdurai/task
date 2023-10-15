@@ -1,0 +1,7 @@
+handler: src/handlers/task.get
+events:
+  - http:
+      path: /task
+      method: get
+      cors: true
+      private: true

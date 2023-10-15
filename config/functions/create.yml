@@ -1,0 +1,7 @@
+handler: src/handlers/task.save
+events:
+  - http:
+      path: /task
+      method: post
+      cors: true
+      private: true

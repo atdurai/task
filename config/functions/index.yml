@@ -1,0 +1,5 @@
+create: ${file(config/functions/create.yml)}
+get: ${file(config/functions/get.yml)}
+getTask: ${file(config/functions/getTask.yml)}
+put: ${file(config/functions/put.yml)}
+remove: ${file(config/functions/remove.yml)}

@@ -1,0 +1,7 @@
+handler: src/handlers/task.remove
+events:
+  - http:
+      path: /task/{id}
+      method: delete
+      cors: true
+      private: true

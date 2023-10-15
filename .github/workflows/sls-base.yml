@@ -1,0 +1,51 @@
+name: Base
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        required: true
+        type: string
+      aws-region:
+        required: true
+        type: string
+      service-name:
+        required: true
+        type: string
+      full-repo-name:
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy_branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.full-repo-name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use NodeJS 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Build
+        run: yarn install --frozen-lockfile
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ap-south-1
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          role-session-name: OIDCSession
+
+      - name: Deploy stage ${{ inputs.stage }}
+        uses: serverless/github-action@v3.1
+        with:
+          args: deploy --stage ${{ inputs.stage }}

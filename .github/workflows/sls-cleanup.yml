@@ -1,0 +1,47 @@
+name: Remove SLS
+on:
+  workflow_call:
+    inputs:
+      stage:
+        required: true
+        type: string
+      aws-region:
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  serverless_cleanup:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.full-repo-name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ap-south-1
+          role-to-assume: ${{ secrets.IAM_ROLE }}
+          role-session-name: OIDCSession
+
+      - name: Build
+        run: yarn install --frozen-lockfile && yarn install --frozen-lockfile --cwd ./service && yarn install --frozen-lockfile --cwd ./authorizer
+
+      - name: Remove stage ${{ inputs.stage }}
+        uses: serverless/github-action@v3.1
+        with:
+          args: remove --stage ${{ inputs.stage }}

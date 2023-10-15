@@ -1,0 +1,32 @@
+name: On merge
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - dev
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.merged == true && github.head_ref != 'dev'
+    uses: ./.github/workflows/sls-cleanup.yml
+    with:
+      stage: ${{ github.head_ref }}
+      aws-region: ap-south-1
+    secrets: inherit
+
+  deploy_in_dev:
+    name: Deploy in Dev
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/sls-base.yml
+    with:
+      stage: dev
+      aws-region: ap-south-1
+      service-name: ${{ github.event.repository.name }}
+      full-repo-name: ${{ github.repository }}
+    secrets: inherit
