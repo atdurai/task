@@ -3,7 +3,6 @@ export interface Task extends TaskRequest {
   status: 'new' | 'in-progress' | 'pending' | 'blocked' | 'completed'
   createdAt: Date
   updatedAt?: Date
-  isDeleted: boolean
 }
 
 export interface TaskRequest {

@@ -13,7 +13,6 @@ export const create = async (req: Request, res: Response) => {
     assignedTo,
     category,
     status: 'new',
-    isDeleted: false,
   }
   await save(data)
   res.status(201).json({ message: 'task created successfully', data })
