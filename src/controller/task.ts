@@ -20,7 +20,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const get = async (req: Request, res: Response) => {
   const tasks: Task[] = await fetch(req)
-  res.status(200).json({ tasks })
+  res.status(200).json(tasks)
 }
 
 export const getById = async (req: Request, res: Response) => {
