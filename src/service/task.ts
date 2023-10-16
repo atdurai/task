@@ -17,7 +17,9 @@ export const fetch = async (req: Request): Promise<Task[]> => {
 
 export const fetchById = async (id: string) => {
   const headers = { 'x-api-key': process.env.TASK_API_KEY }
-  return await axios.get(`${process.env.TASK_API_URL}/task/${id}`, { headers })
+  return await axios
+    .get(`${process.env.TASK_API_URL}/task/${id}`, { headers })
+    .then((response) => response.data)
 }
 
 export const putById = async (id: string, task: TaskRequest) => {

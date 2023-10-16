@@ -27,7 +27,7 @@ export const getById = async (req: Request, res: Response) => {
   const taskId = req.params.id
   const task = await fetchById(taskId)
   if (!task) res.status(404).json({ error: 'Task not found' })
-  res.status(200).json({ task })
+  res.status(200).json(task)
 }
 
 export const updateById = async (req: Request, res: Response) => {
