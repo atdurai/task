@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Task, TaskRequest } from '../type/task'
+import { Task, TaskRequest, TaskResult } from '../type/task'
 import { v4 as uuid } from 'uuid'
 import { save, fetch, fetchById, putById, removeById } from '../service/task'
 export const create = async (req: Request, res: Response) => {
@@ -19,7 +19,7 @@ export const create = async (req: Request, res: Response) => {
 }
 
 export const get = async (req: Request, res: Response) => {
-  const tasks: Task[] = await fetch(req)
+  const tasks: TaskResult = await fetch(req)
   res.status(200).json(tasks)
 }
 
