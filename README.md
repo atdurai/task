@@ -8,6 +8,7 @@ This is a TypeScript project that provides a simple task management API. You can
 ## Getting Started
 
 Follow these steps to set up and run the project locally:
+````
 
 ### 1. Clone the Repository
 
@@ -15,6 +16,7 @@ Follow these steps to set up and run the project locally:
 git clone https://github.com/atdurai/task.git
 cd task
 ```
+````
 ````
 
 ### 2. Install Dependencies
