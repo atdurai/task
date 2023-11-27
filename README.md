@@ -1,9 +1,9 @@
-Certainly, here are instructions for TasK API to guide users on setting up and running the project and tests:
+Certainly, here are instructions for TasK API to guide users on setting up and running the project and tests
 
 ````markdown
 # Task Management API
 
-This is a TypeScript project that provides a simple task management API. You can create, retrieve, update, and delete tasks. Tasks have attributes such as title, description, due date, category, and status.
+This is a TypeScript project that provides a simple Task management API. You can CRUD tasks. Tasks have attributes such as title, description, due date, category, and status.
 
 ## Getting Started
 
@@ -33,7 +33,7 @@ If needed, modify the TypeScript configuration (`tsconfig.json`) and project set
 
 ### 4. Run the Project
 
-Start the task service by running the following command:
+Start the Task service by running the following command:
 
 ```bash
 npm start
